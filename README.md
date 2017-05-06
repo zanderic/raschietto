@@ -51,3 +51,6 @@ E' possibile modificare il tema del pannello di visualizzazione documenti tramit
 
 #### 4. Ritorno alla schermata principale
 Tramite il pulsante "Ritorna alla schermata principale" presente nella barra principale dell'applicazione, è possibile effettuare un "soft reset" della pagina, ovvero pulire il pannello di visualizzazione del documento e quello di visualizzazione delle Annotazioni sul Documento; inoltre, verranno eliminate tutte le annotazioni non salvate presenti.
+
+> Progetto di TECNOLOGIE WEB<br>Riccardo Zandegiacomo De Lugan, Antonio Faienza e Alessandro Pecorari
+<br>Università di Bologna, CdL in Informatica per il Management<br>A.S. 2015/2016, Ottobre 2015
