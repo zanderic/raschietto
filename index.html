@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html> 
+<head lang="en"> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="image/logoHeisenberg.png" style="width:16px;height:16px;" />
+    <title>Scraper</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <!-- Bootstrap Toggle -->
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Personal CSS e JS -->
+    <link rel="stylesheet" type="text/css" href="css/default-style.css">
+    <link rel="stylesheet" type="text/css" href="css/altriBrowsers.css">
+    <link rel="stylesheet" type="text/css" href="css/firefox.css">
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" id="navPersonalizzata">
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+        </div>
+    </div>
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <!-- Credo serva quando la pagina viene ristretta in larghezza -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigationBar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand"><strong><img id="raschietto" alt="logoRaschietto" src="image/raschiettoScritta.png"></strong></a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navigationBar">
+            <ul class="nav navbar-nav">
+                <li><input id="modalita" type="checkbox" checked data-toggle="toggle" data-width="170" data-on="Passa ad Annotator" data-off="Passa a Reader" data-onstyle="info" data-offstyle="warning"></li>
+            </ul>
+            <form class="navbar-form navbar-left" role="search" name="form">
+                <div class="form-group" id="searchbar">
+                    <div class="input-group">
+                        <input class="form-control" id='search' name="uri" type="text" placeholder="URI da cercare..." autocomplete="off" autofocus>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" id="invia" type="submit"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+ 
+            <ul class="nav navbar-nav navbar-right">
+                <li><button type="button" class="btn btn-default" id="scrape" data-toggle="tooltip" data-placement="bottom" title="Forza scraping"><img id='force' alt="raschietto" src='image/raschietto.png' style="width:30px;height:30px;"></button></li>
+                <li><button type="button" class="btn btn-default" id="home" data-toggle="tooltip" data-placement="bottom" title="Torna alla pagina principale"><i class="fa fa-home fa-2x"></i></button></li>
+                <li>
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" id="settings" type="button" data-toggle="dropdown" data-placement="bottom" title="Modifica aspetto della pagina"><i class="fa fa-eye fa-2x"></i><span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><button type="button" class="btn drop" id="chiaro" disabled>Chiaro</button></li>
+                            <li><button type="button" class="btn drop" id="scuro" disabled>Scuro</button></li>
+                            <li><button type="button" class="btn drop" id="seppia" disabled>Seppia</button></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="col-md-3">
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-primary">
+            <div class="panel-heading" id="headingDocs" data-toggle="collapse" data-parent="#accordionLeft" data-target="#docs">
+                <h3 class="panel-title">
+                    <a class="intestazione"><i class="fa fa-caret-square-o-down fa-lg"></i>&nbsp; Documenti <span class="badge badgeDocumenti">0 Annotati</span><i id="loading1"></i></a>
+                </h3>
+            </div>
+            <div id="docs" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div id="docPage">
+                        <ul class="pager">
+                            
+                        </ul>
+                    </div>
+                    <div id="docList" class="list-group">
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading" id="headingAnn" data-toggle="collapse" data-parent="#accordionLeft" data-target="#ann">
+                <h3 class="panel-title">
+                    <a class="intestazione"><i class="fa fa-caret-square-o-down fa-lg"></i>&nbsp; Annotazioni <span class="badge badgeAnnOnDocument">0 totali</span><i id="loading2"></i></a>
+                </h3>
+            </div>
+            <div id="ann" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div id="annotationPanel" class="panel-body">
+                        <div id="autoreDoc">
+                            <h5><b>Autore:</b></h5>
+                            <ul class="lista-annotazioni" id="lista-autore">
+                            </ul>
+                        </div>
+                        <div id="annoPubblicazioneDoc">
+                            <h5><b>Anno di Pubblicazione:</b></h5>
+                            <ul class="lista-annotazioni" id="lista-pubblicazione">
+                            </ul>
+                        </div>
+                        <div id="titoloDoc">
+                            <h5><b>Titolo:</b></h5>
+                            <ul class="lista-annotazioni" id="lista-titolo">
+                            </ul>
+                        </div>
+                        <div id="doiDoc">
+                            <h5><b>DOI:</b></h5>
+                            <ul class="lista-annotazioni" id="lista-doi">
+                            </ul>
+                        </div>
+                        <div  id="urlDoc">
+                            <h5><b>URL:</b></h5>
+                            <ul class="lista-annotazioni" id="lista-url">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading" id="headingAnnScrap" data-toggle="collapse" data-parent="#accordionLeft" data-target="#ann2">
+                <h3 class="panel-title">
+                    <a class="intestazione"><i class="fa fa-caret-square-o-down fa-lg"></i>&nbsp; Grafi disponibili <span class="badge badgeGrafi">0 Grafi</span><i id="loading4"></i></a>
+                </h3>
+            </div>
+            <div id="ann2" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <form class="form-inline">
+                        <div id="grafo" class="list-group">
+                        
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading" id="headingFil" data-toggle="collapse" data-target="#filt">
+                <h3 class="panel-title">
+                    <a class="intestazione"><i class="fa fa-caret-square-o-down fa-lg"></i>&nbsp; Filtri <span class="badge badgeFiltri">0 Attivi</span></a>
+                </h3>
+            </div>
+            <div id="filt" class="panel-collapse collapse">
+                <ul class="filters">
+                    <li class="singleFilter"><input id="filterAuthor" type="checkbox" checked data-toggle="toggle" data-width="200" data-on="Autore" data-off="Autore" data-onstyle="shrink autore" data-offstyle="default"></li>
+                    <li class="singleFilter"><input id="filterPublication" type="checkbox" checked data-toggle="toggle" data-width="200" data-on="Anno di pubblicazione" data-off="Anno di pubblicazione" data-onstyle="shrink pubblicazione" data-offstyle="default"></li>
+                    <li class="singleFilter"><input id="filterTitle" type="checkbox" checked data-toggle="toggle" data-width="200" data-on="Titolo" data-off="Titolo" data-onstyle="shrink titolo" data-offstyle="default"></li>
+                    <li class="singleFilter"><input id="filterDOI" type="checkbox" checked data-toggle="toggle" data-width="200" data-on="DOI" data-off="DOI" data-onstyle="shrink doi" data-offstyle="default"></li>
+                    <li class="singleFilter"><input id="filterURL" type="checkbox" checked data-toggle="toggle" data-width="200" data-on="URL" data-off="URL" data-onstyle="shrink url" data-offstyle="default"></li>
+                    <li class="singleFilter"><input id="filterComment" type="checkbox" checked data-toggle="toggle" data-width="200" data-on="Commenti" data-off="Commenti" data-onstyle="shrink commento" data-offstyle="default"></li>
+                    <li class="singleFilter"><input id="filterRhet" type="checkbox" checked data-toggle="toggle" data-width="200" data-on="Funzioni Retoriche" data-off="Funzioni Retoriche" data-onstyle="shrink retorica" data-offstyle="default"></li>
+                    <li class="singleFilter"><input id="filterQuote" type="checkbox" checked data-toggle="toggle" data-width="200" data-on="Citazioni" data-off="Citazioni" data-onstyle="shrink citazione" data-offstyle="default"></li>
+                </ul>
+            </div>
+        </div>        
+    </div>
+</div>
+<div class="col-md-9">
+    <div class="panel panel-primary">
+        <div class="panel-heading clearfix">
+            <h3 class="panel-title">
+                <a class="intestazione" id="mainIntestazione">Raschietto - Guida generale</a><i id="loading3"></i>
+            </h3>            
+        </div>
+        <div class="panel-body main" id="contenitorePrincipale">
+            <div id="buttonBar" class="btn-group nav nav-tabs navbar-right">
+                <a class="btn btn-default active" id="bartab1" data-toggle="tooltip" data-placement="bottom" title="Annotazione sul documento" onclick="newDocAnnotation()"><i class="fa fa-file-text-o fa-2x"></i></a>
+                <a class="btn btn-default active" id="bartab2" data-toggle="tooltip" data-placement="bottom" title="Annotazione su un frammento"><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                <a class="btn btn-default active" id="bartab3" data-toggle="tooltip" data-placement="bottom" title="Gestisci annotazioni" onclick="manageAnnotation()"><i class="fa fa-save fa-2x"></i></a>
+                <a class="btn btn-default active" id="bartab4" data-toggle="tooltip" data-placement="bottom" title="Salva selezione"><i class="fa fa-check fa-2x"></i></a>
+                <a class="btn btn-default active" id="bartab5" data-toggle="tooltip" data-placement="bottom" title="Gestisci citazioni" onclick="manageQuotes()"><i class="fa fa-quote-right fa-2x"></i></a>
+            </div>
+            <div id="hideButtonBar" class="well">
+                <i class="fa fa-exclamation-triangle fa-3x pull-left"></i>
+                <div>Per inserire o gestire annotazioni devi selezionare il grafo Heisenberg!</div>
+            </div>
+            <div class="panel-body" id="pannelloPrincipale">
+
+            </div>
+        </div>
+    </div>
+</div>
+    
+<!-- Modale avviso ricerca con campo vuoto -->
+<div class="modal fade" id="modalWarning" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Attenzione!</h4>
+            </div>
+            <div class="modal-body" id="sgrido">
+                <p>Campo vuoto, immettere un URI per cercare una risorsa!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-block" data-dismiss="modal" autofocus>Chiudi</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modale per mostrare i dettagli delle annotazioni-->
+<div class="modal fade" id="modalAnnotazione" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Annotazione</h4>
+            </div>
+            <div class="modal-body" id="bodyAnnotazione">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-block" data-dismiss="modal" onclick="resetAnnotationModal()" autofocus>Chiudi</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalLogin" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Login</h4>
+            </div>
+            <div class="modal-body">
+                <p>Per poter inserire o modificare annotazioni, è necessario identificarsi.<br>I dati inseriti verranno legati all'annotazione 
+                       e usati per permettere di risalire all'autore della stessa.</p>
+                <div class="form-group">
+                    <label class="control-label" for="usrnm">Nome:</label>
+                    <input type="text" class="form-control" placeholder="Mario Rossi" id="usrnm" required autofocus>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="email">E-mail:</label>
+                    <input type="text" class="form-control" placeholder="mariorossi@example.it" id="email" required>
+                </div>
+                <div id="errorInput" class="error">
+                    Uno o più campi sono vuoti. Ogni campo è obbligatorio.
+                </div>
+                <div id="errorInput2" class="error">
+                    Indirizzo email non formattato correttamente oppure invalido!
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="untoggleCheckbox()">Annulla</button>
+                <button type="button" class="btn btn-primary" onclick="checkUsrInput()">Login</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalLoad" tabindex="-1" role="alertdialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Avviso</h4>
+            </div>
+            <div class="modal-body">
+                <label>
+                    Il link inserito non è presente tra i documenti forniti; verrà perciò formattato per adattarlo alla pagina. E' possibile (probabile) che il risultato sia impreciso e di difficile lettura; ciò non pregiudica la possibilità di inserire annotazioni sul documento.
+                </label> 
+            </div>
+            <div class="modal-footer">
+                <label id="timer">Questo avviso scomparirà automaticamente in 10 secondi.</label>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi adesso</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modale inserimento annotazioni su documento-->
+<form class="modal multi-step" id="insert-modal-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <label class="modal-title step-1" data-step="1">Inserimento di una nuova annotazione sul documento</label>
+                <label class="modal-title step-2" data-step="2">Inserimento di una nuova annotazione sul documento</label>
+            </div>
+            <div class="modal-body step-1" data-step="1">
+                <div class="form-group">
+                    <label>Tipo di annotazione:</label>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" class="btn shrinkable btn-block autore active" onclick="switchToAuthor()" id="author">Autore</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn shrinkable btn-block pubblicazione" onclick="switchToPubblication()" id="pubb">Anno di pubblicazione</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" class="btn shrinkable btn-block titolo" onclick="switchToTitle()" id="title3">Titolo</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn shrinkable btn-block doi" onclick="switchToDOI()" id="doi">DOI</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" class="btn shrinkable btn-block url" onclick="switchToURL()" id="url">URL</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" id="inserimentoautore">
+                    <label class="control-label" for="selectauthor">Scegli l'autore del documento:</label>
+                    <select class="form-control" id="selectauthor">
+                        <option value="nothing">Seleziona
+                    </select>
+                    <label class="control-label" for="insertauthor">Altrimenti, inserisci manualmente l'autore del documento:</label>
+                    <input type="text" class="form-control" placeholder="Mario Rossi" id="insertauthor">
+                </div>
+                <div class="form-group" id="inserimentopubblicazione">
+                    <label for="insertpubb">Inserisci l'anno di pubblicazione del documento:</label>
+                    <select class="form-control" id="insertpubb">
+                        
+                    </select>
+                </div>
+                <div class="form-group" id="inserimentotitolo">
+                    <label class="control-label" for="inserttitle">Inserisci il titolo del documento:</label>
+                    <textarea class="form-control" placeholder="La Radiazione di Corpo Nero" id="inserttitle" rows="2"></textarea>
+                </div>
+                <div class="form-group" id="inserimentodoi">
+                    <label class="control-label" for="insertdoi">Inserisci il DOI del documento:</label>
+                    <input type="text" class="form-control" placeholder="1.10/1-2-3-4" id="insertdoi" maxlength="80">
+                </div>
+                <div class="form-group" id="inserimentourl">
+                    <label class="control-label" for="inserturl">Associa un URL all'articolo:</label>
+                    <input type="url" class="form-control" placeholder="http://it.esempio.org/esempio" id="inserturl">
+                </div>
+                <div id="errorType2" class="error">
+                    Attenzione! Non puoi lasciare campi vuoti.
+                </div>
+                <div id="errorAuthor2" class="error">
+                    Attenzione! L'autore deve contenere almeno due parole.
+                </div>
+            </div>
+            <div class="modal-body step-2" data-step="2">
+                <label>Inserimento completato!</label>    
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
+                <button type="button" class="btn btn-primary step step-1" data-step="1" onclick="checkTypeInput2()">Inserisci l'annotazione</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Modale inserimento annotazioni su frammenti-->
+<form class="modal multi-step" id="insert-modal-2" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <label class="modal-title step-1" data-step="1">Inserimento di una nuova annotazione su un frammento</label>
+                <label class="modal-title step-2" data-step="2">Inserimento di una nuova annotazione su un frammento</label>
+                <label class="modal-title step-3" data-step="3">Inserimento di una nuova annotazione su un frammento</label>
+                <div class="m-progress">
+                    <div class="m-progress-bar-wrapper">
+                        <div class="m-progress-bar modal-progress">
+                            Progresso: 
+                            <span class="m-progress-current">
+                            </span>
+                            /
+                            <span class="m-progress-total">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body step-1" data-step="1">
+                <label>Frammento selezionato:</label>
+                <div id="frammentoselezionato"></div>
+                <hr>
+                <label>Se il frammento è corretto, premi avanti per proseguire nella registrazione; altrimenti, chiudi questa finestra e ripeti la selezione.</label>
+            </div>
+            <div class="modal-body step-2" data-step="2">
+                <div class="form-group" id="annotationtype">
+                    <label>Tipo di annotazione:</label>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" class="btn shrinkable btn-block autore active" onclick="switchToAuthor2()" id="author2">Autore</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn shrinkable btn-block pubblicazione" onclick="switchToPubblication2()" id="pubb2">Anno di pubblicazione</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" class="btn shrinkable btn-block titolo" onclick="switchToTitle2()" id="title2">Titolo</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn shrinkable btn-block doi" onclick="switchToDOI2()" id="doi2">DOI</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" class="btn shrinkable btn-block url" onclick="switchToURL2()" id="url2">URL</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn shrinkable btn-block commento" onclick="switchToComment()" id="comment">Commento</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" class="btn shrinkable btn-block retorica" onclick="switchToRhetoric()" id="rhetoric">Funzione Retorica</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" id="inserimentoautore2">
+                    <label class="control-label" for="selectauthor2">Scegli l'autore del documento:</label>
+                    <select class="form-control" id="selectauthor2">
+                        <option value="nothing">Seleziona
+                    </select>
+                    <label class="control-label" for="insertauthor2">Altrimenti, inserisci manualmente l'autore del documento:</label>
+                    <input type="text" class="form-control" placeholder="Mario Rossi" id="insertauthor2">
+                </div>
+                <div class="form-group" id="inserimentopubblicazione2">
+                    <label for="insertpubb2">Inserisci l'anno di pubblicazione del documento:</label>
+                    <select class="form-control" id="insertpubb2">
+                        
+                    </select>
+                </div>
+                <div class="form-group" id="inserimentotitolo2">
+                    <label class="control-label" for="inserttitle2">Inserisci il titolo del documento:</label>
+                    <textarea class="form-control" placeholder="La Radiazione di Corpo Nero" id="inserttitle2" rows="2"></textarea>
+                </div>
+                <div class="form-group" id="inserimentodoi2">
+                    <label class="control-label" for="insertdoi2">Inserisci il DOI del documento:</label>
+                    <input type="text" class="form-control" placeholder="1.10/1-2-3-4" id="insertdoi2" maxlength="80">
+                </div>
+                <div class="form-group" id="inserimentourl2">
+                    <label class="control-label" for="inserturl2">Associa un URL all'articolo:</label>
+                    <input type="url" class="form-control" placeholder="http://it.esempio.org/esempio" id="inserturl2">
+                </div>
+                <div class="form-group" id="inserimentocommento">
+                    <label class="control-label" for="insertcomment">Inserisci un commento al frammento:</label>
+                    <textarea class="form-control" placeholder="Inserisci un commento" id="insertcomment" rows="3"></textarea>
+                </div>
+                <div class="form-group" id="inserimentoretorica">
+                    <label for="insertreth">Assegna una funzione retorica al frammento: </label>
+                    <select class="form-control" id="insertreth">
+                        <option value="Abstract">Abstract</option>
+                        <option value="Introduction">Introduction</option>
+                        <option value="Materials">Materials</option>
+                        <option value="Methods">Methods</option>
+                        <option value="Results">Results</option>
+                        <option value="Discussion">Discussion</option>
+                        <option value="Conclusion">Conclusion</option>
+                    </select>
+                </div>
+                <div id="errorType" class="error">
+                    Attenzione! Non puoi lasciare campi vuoti.
+                </div>
+                <div id="errorAuthor" class="error">
+                    Attenzione! L'autore deve contenere almeno due parole.
+                </div>
+            </div>
+            <div class="modal-body step-3" data-step="3">
+                <label>Inserimento completato!</label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="deleteAnnotation(); clearSelection();">Chiudi</button>
+                <button type="button" class="btn btn-primary step step-1" data-step="1" onclick="sendEvent('#insert-modal-2', 2)">Avanti</button>
+                <button type="button" class="btn btn-primary step step-2" data-step="2" onclick="clearErrors(2,2);sendEvent('#insert-modal-2', 1)">Indietro</button>
+                <button type="button" class="btn btn-primary step step-2" data-step="2" onclick="checkTypeInput()">Inserisci l'annotazione</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form class="modal multi-step" id="citationModal" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <label class="modal-title step-1" data-step="1">Gestione Citazioni</label>
+                <label class="modal-title step-2" data-step="2">Gestione Citazioni</label>
+                <label class="modal-title step-3" data-step="3">Gestione Citazioni</label>
+                <label class="modal-title step-4" data-step="4">Gestione Citazioni</label>
+                <label class="modal-title step-5" data-step="5">Gestione Citazioni</label>
+                <label class="modal-title step-6" data-step="6">Gestione Citazioni</label>
+                <div class="m-progress">
+                    <div class="m-progress-bar-wrapper">
+                        <div class="m-progress-bar modal-progress">
+                            Progresso: 
+                            <span class="m-progress-current">
+                            </span>
+                            /
+                            <span class="m-progress-total">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body step-1" data-step="1" id="bodyQuote">
+                <label for="lista-cit">Scegli una citazione tra quelle disponibili:</label>
+                <select class="form-control" id="lista-cit">
+                    
+                </select>
+            </div>
+            <div class="modal-body step-2" data-step="2">
+                <label>Citazione selezionata:</label>
+                <blockquote id="block"></blockquote>
+                <label>Cosa vuoi fare?</label><br />
+                <button class="btn btn-warning" id="annotationquote">Annota sulla citazione</button>
+                <button class="btn btn-danger" id="managequote">Gestisci la citazione</button>
+                <button class="btn btn-success" id="savequote">Salva le modifiche</button>
+            </div>
+            <div class="modal-body step-3" data-step="3" id="thirdstep">
+                <div class="form-group">
+                    <label>Tipo di annotazione:</label>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" class="btn shrinkable btn-block autore active" onclick="switchToAuthor3()" id="author3">Autore</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn shrinkable btn-block pubblicazione" onclick="switchToPubblication3()" id="pubb3">Anno di pubblicazione</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" class="btn shrinkable btn-block titolo" onclick="switchToTitle3()" id="title4">Titolo</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn shrinkable btn-block doi" onclick="switchToDOI3()" id="doi3">DOI</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" class="btn shrinkable btn-block url" onclick="switchToURL3()" id="url3">URL</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" id="inserimentoautore3">
+                    <label class="control-label" for="selectauthor3">Scegli l'autore del documento citato:</label>
+                    <select class="form-control" id="selectauthor3">
+                        <option value="nothing">Seleziona
+                    </select>
+                    <label class="control-label" for="insertauthor3">Inserisci l'autore del documento citato:</label>
+                    <input type="text" class="form-control" placeholder="Mario Rossi" id="insertauthor3">
+                </div>
+                <div class="form-group" id="inserimentopubblicazione3">
+                    <label for="insertpubb3">Inserisci l'anno di pubblicazione del documento citato:</label>
+                    <select class="form-control" id="insertpubb3">
+                        
+                    </select>
+                </div>
+                <div class="form-group" id="inserimentotitolo3">
+                    <label class="control-label" for="inserttitle3">Inserisci il titolo del documento citato:</label>
+                    <textarea class="form-control" placeholder="La Radiazione di Corpo Nero" id="inserttitle3" rows="2"></textarea>
+                </div>
+                <div class="form-group" id="inserimentodoi3">
+                    <label class="control-label" for="insertdoi3">Inserisci il DOI del documento citato:</label>
+                    <input type="text" class="form-control" placeholder="1.10/1-2-3-4" id="insertdoi3" maxlength="80">
+                </div>
+                <div class="form-group" id="inserimentourl3">
+                    <label class="control-label" for="inserturl3">Associa un URL al documento citato:</label>
+                    <input type="url" class="form-control" placeholder="http://it.esempio.org/esempio" id="inserturl3">
+                </div>
+                <div id="errorType3" class="error">
+                    Attenzione! Non puoi lasciare campi vuoti.
+                </div>
+                <div id="errorAuthor3" class="error">
+                    Attenzione! L'autore deve contenere almeno due parole.
+                </div>
+            </div>
+            <div class="modal-body step-4" data-step="4">
+                <label>Inserimento completato!</label>
+                <br />
+                <br />
+                Nota! L'annotazione è stata creata, ma non sarà salvata fino a quando non avrai salvato le modifiche.<br /> Per salvare, o effettuare altre azioni, scegli il tasto "Torna al menu".
+            </div>
+            <div class="modal-body step-5" data-step="5">
+                <label>Ecco le annotazioni che hai aggiunto alla citazione: </label>
+                <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th><div id="circle"></div></th>
+                                    <th>Tipo</th>
+                                    <th>Contenuto</th>
+                                    <th>Cancella</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bodyTabella2">
+                            </tbody>
+                        </table>
+                    </div>
+                <br />
+                Nota! Le modifiche sono state apportate solo localmente.<br /> Per salvarle, o effettuare altre azioni, scegli il tasto "Torna al menu".
+            </div>
+            <div class="modal-body step-6" data-step="6">
+                <label>Salvataggio completato!</label>
+            </div>
+            <div class="modal-footer" id="footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="clearTemporary()">Chiudi</button>
+                <button type="button" class="btn btn-primary step step-1" data-step="1" id="avantiif" onclick="checkAvanti()">Inserisci citazione e procedi</button>
+                <button type="button" class="btn btn-primary step step-3" data-step="3" onclick="sendEvent('#citationModal', 2)">Indietro</button>
+                <button type="button" class="btn btn-primary step step-3" data-step="3" onclick="checkTypeInput3()">Inserisci l'annotazione</button>
+                <button type="button" class="btn btn-primary step step-4" data-step="4" onclick="sendEvent('#citationModal', 2)">Torna al menu</button>
+                <button type="button" class="btn btn-primary step step-5" data-step="5" onclick="sendEvent('#citationModal', 2)">Torna al menu</button>
+                <button type="button" class="btn btn-primary step step-6" data-step="6" data-dismiss="modal" onclick="clearTemporary()">Esci</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Modale che fornisce un pannello di gestione delle annotazioni -->
+<div class="modal fade" id="modalGestioneAnnotazioni" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="titleAnnotations"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th><div id="circle"></div></th>
+                                <th>Target</th>
+                                <th>Tipo</th>
+                                <th>Oggetto</th>
+                                <th>Modifica</th>
+                                <th>Cancella</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyTabella">
+                        </tbody>
+                    </table>
+                </div>    
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-block" onclick="createJson()">Invia</button>
+                <button type="button" class="btn btn-default btn-block" data-dismiss="modal">Chiudi</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalModificaAnnotazione" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Annotazione da modificare</h4>
+            </div>
+            <div class="modal-body" id="bodyModify">
+
+            </div>
+            <div id="errorInput3" class="error">
+                Per modificare l'annotazione inserisci il valore desiderato.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-block" id="btnModifica" onclick="modifyAnnotation()">Modifica</button>
+                <button type="button" class="btn btn-default btn-block" onclick="modalSwitcher()">Chiudi</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<!-- Bootstrap Toggle -->
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js"></script>
+<script type="text/javascript" src="externaljs/multi-step-modal-master/multi-step-modal.js"></script>
+<script type="text/javascript" src="externaljs/jsonparse/json-sans-eval.js"></script>
+<script type="text/javascript" src="js/pageElements.js"></script>
+<script type="text/javascript" src="js/generalPurposeFunctions.js"></script>
+<script type="text/javascript" src="js/documentFunctions.js"></script>
+<script type="text/javascript" src="js/annotazioniDocumento.js"></script>
+<script type="text/javascript" src="js/annotazioniFrammenti.js"></script>
+<script type="text/javascript" src="js/externalGraph.js"></script>
+<script type="text/javascript" src="js/annotationActions.js"></script>
+<script type="text/javascript" src="js/gestioneFrammenti.js"></script>
+<script type="text/javascript" src="js/remoteAnnotationManagement.js"></script>
+<script type="text/javascript" src="js/citationWidget.js"></script>
+</body>
+</html>

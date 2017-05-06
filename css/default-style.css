@@ -1,0 +1,409 @@
+body {
+    background-image: url("./../image/school.png");
+    padding-top: 70px;
+}
+
+/*Media queries*/
+
+@media (max-width: 767px) {
+    .nav-tabs {
+        display: none;
+        position: relative;
+        float: right;
+    }
+}
+
+/*Classes*/
+
+.icon {
+    width: 20px;
+    height: 20px;
+}
+
+.m-progress-bar {
+    min-height: 1em;
+    background: #c12d2d;
+    width: 5%;
+}
+
+.progress {
+    height: 5px;
+    border-radius: 0px;
+    margin-bottom: 0px;
+    background-color: rgb(253,253,253);
+}
+
+.progress-bar {
+    min-width: 2em;
+    background-image: none;
+    background-color: #5bc0de;
+}
+
+ul.navbar-nav {
+    margin-top: 2px;
+    padding: 6px;
+}
+
+.nav-tabs {
+    display: none;
+    position: fixed;
+    right: 5%;
+}
+
+.error {
+    color: red;
+    display: none;
+}
+
+.hidd {
+    background-color: transparent !important;
+}
+
+.filters {
+    margin-top: 4%;
+    margin-left: 6%;
+    list-style-type: none;
+}
+
+.singleFilter {
+    margin-bottom: 3%;
+}
+
+.panel-title {
+    display: inline;
+}
+
+.drop {
+    width: 90%;
+    margin: 2%;
+    margin-left: 5%;
+    border-style: solid;
+    border-color: black;
+}
+
+.annotation {
+    border-radius: 5px;
+    border:transparent;
+}
+
+.annotation .annotation {
+    background-color: grey !important;
+}
+
+.citazione .annotation {
+    background-color: mediumorchid !important;
+}
+
+.autore {
+    background-color: burlywood ! important;
+}
+
+.pubblicazione {
+    background-color: magenta !important;
+}
+
+.titolo {
+    background-color: blue !important;
+    color: white;
+}
+.titolo:hover {
+    color: white;
+}
+
+.doi {
+    background-color: red !important;
+    color: white;
+}
+.doi:hover {
+    color: white;
+}
+
+.url {
+    background-color: olive !important;
+    color: white;
+}
+.url:hover {
+    color: white;
+}
+
+.commento {
+    background-color: yellow !important;
+}
+
+.retorica {
+    background-color: chartreuse !important;
+}
+
+.indef {
+    background-color: orange;
+}
+
+.citazione {
+    background-color: cyan !important; 
+}
+
+.btn-default.toggle-off {
+    background-color: gray !important;
+    color: white !important;
+}
+
+.navbar-form .input-group {
+    display: table;
+}
+
+.navbar-form .input-group .input-group-btn {
+    white-space: nowrap;
+    width: 5%;
+}
+
+.navbar-form .input-group .form-control {
+    width: 100%;
+}
+
+.navbar-left {
+    width: 50%;
+}
+
+.input-group {
+    width: 140%;
+}
+
+.m-progress-bar {
+    background: #93d4ff;
+}
+
+.fragment-chooser {
+    list-style-type: none;
+}
+
+.intestazione {
+    text-decoration: none !important;
+}
+
+.panel > .panel-heading, .list-group > .active, .list-group > .active:hover, #pageNumber {
+    background-image: none;
+    background-color: #1d86b0;
+    color: white;
+}
+
+.badge {
+    float: right;
+    color: #1d86b0;
+    background-color: white;
+    margin-left: 2%;
+}
+
+div.toggle.btn {
+    margin-top: 3%;
+    border-radius: 10px;
+}
+
+.nav > li {
+    margin-bottom: 1%;
+}
+
+.list-group > a.disabled {
+    pointer-events: none;
+}
+
+.modal {
+    overflow-y: scroll;
+}
+
+/*Element IDs*/
+
+#docPage {
+    text-align: center;
+    font-weight: bold;
+}
+
+#headingAnn, #headingDocs, #headingFil, #headingAnnScrap {
+    cursor: pointer;
+}
+
+#navPersonalizzata {
+    background: #1d86b0;
+}
+
+#home, #scrape{
+    margin-right: 10px;
+}
+
+#pannelloPrincipale {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
+#bartab4 {
+    display: none;
+}
+
+#inserimentocitazione {
+    display: none;
+}
+
+#inserimentoretorica {
+    display: none;
+}
+
+#inserimentocommento
+{
+    display: none;
+}
+
+#inserimentoautore {
+    display: block;
+}
+
+#inserimentopubblicazione {
+    display: none;
+}
+
+#inserimentotitolo {
+    display: none;
+}
+
+#inserimentodoi {
+    display: none;
+}
+
+#inserimentourl {
+    display: none;
+}
+
+#inserimentoautore2
+{
+    display: block;
+}
+
+#inserimentopubblicazione2
+{
+    display: none;
+}
+
+#inserimentotitolo2
+{
+    display: none;
+}
+
+#inserimentodoi2
+{
+    display: none;
+}
+
+#inserimentourl2
+{
+    display: none;
+}
+
+#inserimentoautore3
+{
+    display: block;
+}
+
+#inserimentopubblicazione3
+{
+    display: none;
+}
+
+#inserimentotitolo3
+{
+    display: none;
+}
+
+#inserimentodoi3
+{
+    display: none;
+}
+
+#inserimentourl3
+{
+    display: none;
+}
+
+#circle {
+    border: 1px solid black;
+    padding: 9px 9px;
+    border-radius: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1%;
+}
+
+#circle2 {
+    border: 1px solid black;
+    padding: 30px 30px;
+    border-radius: 100%;
+    margin-top: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1%;
+}
+#searchbar {
+    width: 85%;
+    margin-top: 0.7%;
+    margin-left: 3%;
+}
+
+#newAnnotation {
+    margin: auto;
+    width: 25%;
+    text-align: center;
+}
+
+#newAnnotation > span {
+    font-weight: bold;
+}
+
+#errorAuthor {
+    display: none;
+}
+
+#invisible1 {
+    display: none;
+}
+
+#chiaro {
+    background-color: rgb(253,253,253) !important;
+    color: rgb(49,49,49) !important;
+}
+
+#scuro {
+    background-color: rgb(41,41,41) !important;
+    color: white !important;
+}
+
+#seppia {
+    background-color: rgb(251,240,214) !important;
+    color: rgb(91,70,52) !important;
+}
+
+#raschietto {
+    position: relative;
+    top: -15px;
+    width: 150px;
+    height: 50px;
+}
+
+#mainIntestazione {
+    cursor: default;
+}
+
+#pagerNumberOfPages {
+    display: inline;
+}
+
+#hideButtonBar {
+    display: none;
+    position: fixed;
+    right: 5%;
+    width: 25%;
+}
+
+#docs {
+    font-size: small;
+}
+
+#docList > i, #grafo > i {
+    position: relative;
+    left: 43%;
+}

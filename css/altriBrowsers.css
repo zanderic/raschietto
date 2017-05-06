@@ -1,0 +1,33 @@
+body {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.highlight {
+    cursor: pointer;
+    -webkit-box-shadow: 0 0 3px 3px grey;
+    box-shadow: 0 0 3px 3px grey;
+}
+
+.shrinkable {
+    -webkit-transform:scale(.9);
+    -ms-transform:scale(.9);
+    -o-transform:scale(.9);
+     transform:scale(.9);
+}
+
+.shrink {
+    -webkit-transform:scale(1.0);
+    -ms-transform:scale(1.0);
+    -o-transform:scale(1.0);
+     transform:scale(1.0);
+}
+
+#pannelloPrincipale {
+    -webkit-user-select: all;
+    -khtml-user-select: all;
+    -o-user-select: all;
+    user-select: all;
+}

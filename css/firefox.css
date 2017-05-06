@@ -1,0 +1,19 @@
+body {
+    -moz-user-select: none;
+}
+
+#pannelloPrincipale {
+    -moz-user-select: text;
+}
+
+.annotation:hover {
+    -moz-box-shadow: 0 0 3px 3px grey;
+}
+
+.shrinkable {
+    -moz-transform:scale(.9);
+}
+
+.shrink {
+    -moz-transform:scale(1.0);
+}
